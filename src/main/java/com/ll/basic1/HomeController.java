@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -61,6 +62,18 @@ public class HomeController {
     @ResponseBody
     public List<Person> showPeople() {
         return people;
+    }
+
+    @GetMapping("/home/removePerson")
+    @ResponseBody
+    public String removePerson(int id) {
+        for(Person p : people) {
+            if(p.getId() == id) {
+                people.remove(p);
+                return id + "번 사람이 삭제되었습니다.";
+            }
+        }
+        return id + "번 사람이 존재하지 않습니다.";
     }
 }
 
