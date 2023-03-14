@@ -2,6 +2,8 @@ package com.ll.basic1;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,10 +77,24 @@ public class HomeController {
         }
         return id + "번 사람이 존재하지 않습니다.";
     }
+
+    @GetMapping("/home/modifyPerson")
+    @ResponseBody
+    public String modifyPerson(int id, String name, int age) {
+        for(Person p : people) {
+            if(p.getId() == id) {
+                p.setName(name);
+                p.setAge(age);
+                return id + "번 사람이 수정되었습니다.";
+            }
+        }
+        return id + "번 사람이 존재하지 않습니다.";
+    }
 }
 
 @AllArgsConstructor
 @Getter
+@Setter
 class Person {
     private static int lastId;
     private int id;
