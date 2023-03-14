@@ -8,16 +8,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class HomeController {
     private int cnt;
-    private int n;
-    private ArrayList<Person> person;
+    private List<Person> people;
     HomeController(){
         cnt = -1;
-        n = 0;
-        person = new ArrayList<>();
+        people = new ArrayList<>();
     }
 
     @GetMapping("/home/main")
@@ -52,22 +51,31 @@ public class HomeController {
 
     @GetMapping("/home/addPerson")
     @ResponseBody
-    public String showAddPerson(@RequestParam String name, @RequestParam int age) {
-        person.add(new Person(++n, name, age));
-        return n + "번 사람이 추가되었습니다.";
+    public String addPerson(String name, int age) {
+        Person p = new Person(name, age);
+        people.add(p);
+        return p.getId() + "번 사람이 추가되었습니다.";
     }
 
     @GetMapping("/home/people")
     @ResponseBody
-    public ArrayList<Person> showPeople() {
-        return person;
+    public List<Person> showPeople() {
+        return people;
     }
 }
 
 @AllArgsConstructor
 @Getter
 class Person {
+    private static int lastId;
     private int id;
     private String name;
     private int age;
+
+    static {
+        lastId = 0;
+    }
+    Person(String _name, int _age){
+        this(++lastId, _name, _age);
+    }
 }
