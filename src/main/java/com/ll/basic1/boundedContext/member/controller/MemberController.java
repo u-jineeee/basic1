@@ -4,10 +4,7 @@ import com.ll.basic1.base.Rq;
 import com.ll.basic1.base.RsData;
 import com.ll.basic1.boundedContext.member.entity.Member;
 import com.ll.basic1.boundedContext.member.service.MemberService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +17,11 @@ public class MemberController {
     private final Rq rq;
 
     @GetMapping("/member/login")
+    public String showLogin() {
+        return "usr/member/login";
+    }
+
+    @GetMapping("/member/doLogin")
     @ResponseBody
     public RsData login(String username, String password) {
         if (username == null || username.trim().length() == 0) {
